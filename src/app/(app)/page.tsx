@@ -58,7 +58,10 @@ const EmptyTaskList = () => {
           alt="a"
         />
         <div className="absolute w-full bottom-0 flex justify-center text-xs opacity-60 hover:opacity-70">
-          <a href="https://www.vecteezy.com/free-vector/empty">
+          <a
+            href="https://www.vecteezy.com/free-vector/empty"
+            target="_blank"
+          >
             Empty Vectors by Vecteezy
           </a>
         </div>

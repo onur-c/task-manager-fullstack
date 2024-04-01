@@ -102,9 +102,9 @@ export function CreateTaskFormDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] border-border">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Create Task</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            You can create a task here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -195,7 +195,7 @@ export function CreateTaskFormDialog() {
                 name="date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>Due Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -238,7 +238,7 @@ export function CreateTaskFormDialog() {
                 type="submit"
                 className="w-full"
               >
-                Submit
+                Save
               </Button>
             </form>
           </Form>

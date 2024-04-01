@@ -38,6 +38,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 import { editTaskFormSchema } from "@/lib/schema";
 import { cn } from "@/lib/utils";
@@ -45,18 +51,11 @@ import { TaskDataType } from "@/types";
 import { formatDate } from "@/utils/date-format";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { PopoverClose } from "@radix-ui/react-popover";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Badge } from "./ui/badge";
-import { Button, buttonVariants } from "./ui/button";
-import { Calendar } from "./ui/calendar";
-
-import { Input } from "./ui/input";
-import { useToast } from "./ui/use-toast";
 
 const TaskCard = ({ task }: { task: TaskDataType }) => {
   const queryClient = useQueryClient();
@@ -136,7 +135,6 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
       )}
     >
       {/* Three Dot Button */}
-      {/* TODO: Edit button */}
       <div className="absolute top-2 right-2 ">
         <Popover>
           <PopoverTrigger asChild>
@@ -147,10 +145,8 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
               <DotsVerticalIcon />
             </Button>
           </PopoverTrigger>
-
           <PopoverContent className="w-80  border-border">
             <h4 className="text-xl font-bold">Edit Task</h4>
-
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -194,7 +190,7 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
                   name="date"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Date</FormLabel>
+                      <FormLabel>Due Date</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -286,101 +282,56 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
           </PopoverContent>
         </Popover>
       </div>
-
-      <>
-        <CardHeader>
-          <CardTitle>
-            <p>{task.title}</p>
-          </CardTitle>
-          <CardDescription className="text-xs">
-            <p>Due date: {formatDate(task.date)}</p>
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="max-h-1/2 overflow-y-auto">
-          <p className="text-sm">{task.description}</p>
-        </CardContent>
-      </>
-
+      {/* Card Content */}
+      <CardHeader>
+        <CardTitle>
+          <p>{task.title}</p>
+        </CardTitle>
+        <CardDescription className="text-xs">
+          <p>Due date: {formatDate(task.date)}</p>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="max-h-1/2 overflow-y-auto">
+        <p className="text-sm">{task.description}</p>
+      </CardContent>
       <CardFooter className="flex flex-col  gap-2 mt-auto items-start ">
         <div className="flex flex-wrap gap-2">
-          {task.isCompleted ? (
-            <Badge
-              className="cursor-pointer flex items-center gap-1"
-              onClick={() =>
-                updateMutation.mutate({
-                  isCompleted: !task.isCompleted,
-                })
-              }
-            >
-              <CheckCircledIcon />
-              Completed
-            </Badge>
-          ) : (
-            <Badge
-              className="cursor-pointer flex items-center gap-1"
-              variant={"secondary"}
-              onClick={() =>
-                updateMutation.mutate({
-                  isCompleted: !task.isCompleted,
-                })
-              }
-            >
-              <CheckCircledIcon />
-              Not Completed
-            </Badge>
-          )}
-          {task.isUrgent ? (
-            <Badge
-              className="cursor-pointer flex items-center gap-1"
-              onClick={() =>
-                updateMutation.mutate({
-                  isUrgent: !task.isUrgent,
-                })
-              }
-            >
-              <ClockIcon />
-              Urgent
-            </Badge>
-          ) : (
-            <Badge
-              className="cursor-pointer flex items-center gap-1"
-              variant={"secondary"}
-              onClick={() =>
-                updateMutation.mutate({
-                  isUrgent: !task.isUrgent,
-                })
-              }
-            >
-              <ClockIcon />
-              Not Urgent
-            </Badge>
-          )}
-          {task.isImportant ? (
-            <Badge
-              className="cursor-pointer flex items-center gap-1"
-              onClick={() =>
-                updateMutation.mutate({
-                  isImportant: !task.isImportant,
-                })
-              }
-            >
-              <ExclamationTriangleIcon />
-              Important
-            </Badge>
-          ) : (
-            <Badge
-              className="cursor-pointer flex items-center gap-1"
-              variant={"secondary"}
-              onClick={() =>
-                updateMutation.mutate({
-                  isImportant: !task.isImportant,
-                })
-              }
-            >
-              <ExclamationTriangleIcon />
-              Not Important
-            </Badge>
-          )}
+          <Badge
+            className="cursor-pointer flex items-center gap-1"
+            variant={task.isCompleted ? "default" : "secondary"}
+            onClick={() =>
+              updateMutation.mutate({
+                isCompleted: !task.isCompleted,
+              })
+            }
+          >
+            <CheckCircledIcon />
+            {task.isCompleted ? <p>Completed</p> : <p>Not Completed</p>}
+          </Badge>
+          <Badge
+            className="cursor-pointer flex items-center gap-1"
+            variant={task.isUrgent ? "default" : "secondary"}
+            onClick={() =>
+              updateMutation.mutate({
+                isUrgent: !task.isUrgent,
+              })
+            }
+          >
+            <CheckCircledIcon />
+            {task.isUrgent ? <p>Urgent</p> : <p>Not Urgent</p>}
+          </Badge>
+          <Badge
+            className="cursor-pointer flex items-center gap-1"
+            variant={task.isImportant ? "default" : "secondary"}
+            onClick={() =>
+              updateMutation.mutate({
+                isImportant: !task.isImportant,
+              })
+            }
+          >
+            <CheckCircledIcon />
+            {task.isImportant ? <p>Important</p> : <p>Not Important</p>}
+          </Badge>
         </div>
         <div className="text-xs opacity-70">
           Created at: {formatDate(task.createdAt.toString())}
