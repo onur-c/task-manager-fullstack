@@ -46,9 +46,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { PopoverClose } from "@radix-ui/react-popover";
 
 import { editTaskFormSchema } from "@/lib/schema";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { TaskDataType } from "@/types";
-import { formatDate } from "@/utils/date-format";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";

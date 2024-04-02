@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import NextTopLoader from "nextjs-toploader";
 
 import "../globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -35,6 +36,8 @@ export default function RootLayout({
             fontSans.variable
           )}
         >
+          <NextTopLoader />
+
           <ThemeProvider
             defaultTheme="dark"
             disableTransitionOnChange
@@ -46,6 +49,9 @@ export default function RootLayout({
               <Toaster />
               <Sidebar />
               {children}
+              <div className="absolute bottom-16 right-16">
+                <CreateTaskFormDialog />
+              </div>
             </QueryProvider>
           </ThemeProvider>
         </body>
