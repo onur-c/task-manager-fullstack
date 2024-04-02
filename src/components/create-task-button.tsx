@@ -54,7 +54,7 @@ export function CreateTaskFormDialog() {
   });
 
   const postTask = async (values: z.infer<typeof formSchema>) => {
-    return axios.post("/api/task/create", values);
+    return axios.post(`/api/task`, values);
   };
 
   const mutation = useMutation({
