@@ -238,7 +238,7 @@ export function CreateTaskFormDialog() {
                 type="submit"
                 className="w-full"
               >
-                Save
+                {form.formState.isSubmitting ? "Saving" : "Save"}
               </Button>
             </form>
           </Form>
