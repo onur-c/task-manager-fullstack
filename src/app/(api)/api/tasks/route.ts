@@ -1,10 +1,8 @@
 import db from "@/lib/db";
-import { formSchema } from "@/lib/schema";
 import { auth } from "@clerk/nextjs";
-import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const { userId } = auth();
     if (!userId) {

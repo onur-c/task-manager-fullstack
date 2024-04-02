@@ -1,5 +1,4 @@
 import db from "@/lib/db";
-import { formSchema } from "@/lib/schema";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
