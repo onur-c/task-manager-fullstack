@@ -35,6 +35,7 @@ import { formSchema } from "@/lib/schema";
 import { useAuth } from "@clerk/nextjs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { postTask } from "@/lib/api-calls";
 
 export function CreateTaskFormDialog() {
   const { toast } = useToast();
@@ -52,10 +53,6 @@ export function CreateTaskFormDialog() {
       isUrgent: false,
     },
   });
-
-  const postTask = async (values: z.infer<typeof formSchema>) => {
-    return axios.post(`/api/task`, values);
-  };
 
   const mutation = useMutation({
     mutationFn: postTask,

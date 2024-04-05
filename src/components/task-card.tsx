@@ -55,22 +55,11 @@ import axios from "axios";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { deleteTask, updateTask } from "@/lib/api-calls";
 
 const TaskCard = ({ task }: { task: TaskDataType }) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
-
-  const toggleStatus = (
-    payload:
-      | Record<string, boolean>
-      | { title: string; description: string; date: Date }
-  ) => {
-    return axios.put(`/api/task/${task.id}`, payload);
-  };
-
-  const deleteTask = () => {
-    return axios.delete(`/api/task/${task.id}`);
-  };
 
   const deleteMutation = useMutation({
     mutationFn: deleteTask,
@@ -94,7 +83,7 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: toggleStatus,
+    mutationFn: updateTask,
     onSuccess: () => {
       toast({
         title: "Success",
@@ -124,8 +113,9 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
   });
 
   async function onSubmit(values: z.infer<typeof editTaskFormSchema>) {
-    updateMutation.mutate(values);
+    updateMutation.mutate({ payload: values, id: task.id });
   }
+
   return (
     <Card
       className={cn(
@@ -268,7 +258,7 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
                       <AlertDialogAction
                         className={buttonVariants({ variant: "destructive" })}
                         onClick={() => {
-                          deleteMutation.mutate();
+                          deleteMutation.mutate(task.id);
                         }}
                       >
                         Continue
@@ -300,7 +290,10 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
             variant={task.isCompleted ? "default" : "secondary"}
             onClick={() =>
               updateMutation.mutate({
-                isCompleted: !task.isCompleted,
+                payload: {
+                  isCompleted: !task.isCompleted,
+                },
+                id: task.id,
               })
             }
           >
@@ -312,7 +305,10 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
             variant={task.isUrgent ? "default" : "secondary"}
             onClick={() =>
               updateMutation.mutate({
-                isUrgent: !task.isUrgent,
+                payload: {
+                  isUrgent: !task.isUrgent,
+                },
+                id: task.id,
               })
             }
           >
@@ -324,7 +320,10 @@ const TaskCard = ({ task }: { task: TaskDataType }) => {
             variant={task.isImportant ? "default" : "secondary"}
             onClick={() =>
               updateMutation.mutate({
-                isImportant: !task.isImportant,
+                payload: {
+                  isImportant: !task.isImportant,
+                },
+                id: task.id,
               })
             }
           >
