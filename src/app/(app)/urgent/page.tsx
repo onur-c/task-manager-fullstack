@@ -1,5 +1,5 @@
 "use client";
-import { useTaskQuery } from "@/app/hooks/use-task-query";
+import { useTaskQuery } from "@/hooks/use-task-query";
 import { CreateTaskFormDialog } from "@/components/create-task-button";
 import TaskCard from "@/components/task-card";
 import { Button } from "@/components/ui/button";

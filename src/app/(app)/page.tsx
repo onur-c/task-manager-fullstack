@@ -6,7 +6,7 @@ import { TaskDataType } from "@/types";
 import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import { useTaskQuery } from "../hooks/use-task-query";
+import { useTaskQuery } from "../../hooks/use-task-query";
 
 export default function Home() {
   const taskQuery = useTaskQuery();
