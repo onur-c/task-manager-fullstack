@@ -62,24 +62,24 @@ const Sidebar = () => {
         </Link>
       </Button>
       <div className="flex flex-col items-center">
-        <div
-          className={cn(
-            buttonVariants({
-              variant: "ghost",
-            }),
-            "flex gap-1 items-center h-12 "
-          )}
-        >
-          <UserButton afterSignOutUrl="/" />
-          <SignedIn>
+        <SignedIn>
+          <div
+            className={cn(
+              buttonVariants({
+                variant: "ghost",
+              }),
+              "flex gap-1 items-center h-12 "
+            )}
+          >
+            <UserButton afterSignOutUrl="/" />
             <div className="hidden sm:inline-block">
               <p className="text-sm">{user?.fullName}</p>
               <p className="truncate w-[12ch] text-xs opacity-80">
                 {user?.primaryEmailAddress?.toString()}
               </p>
             </div>
-          </SignedIn>
-        </div>
+          </div>
+        </SignedIn>
         <SignedOut>
           <Button
             className="w-2/3"
