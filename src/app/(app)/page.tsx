@@ -1,12 +1,11 @@
 "use client";
-import { CreateTaskFormDialog } from "@/components/create-task-button";
-import TaskCard from "@/components/task-card";
 import { Button } from "@/components/ui/button";
-import { TaskDataType } from "@/types";
 import { useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useTaskQuery } from "../../hooks/use-task-query";
+import TaskCard from "@/components/task-card";
+import { TaskDataType } from "@/types";
 
 export default function Home() {
   const taskQuery = useTaskQuery();

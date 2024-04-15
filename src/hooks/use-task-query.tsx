@@ -5,5 +5,6 @@ export const useTaskQuery = () => {
   return useQuery({
     queryKey: ["tasks"],
     queryFn: getTasks,
+    refetchOnMount: false,
   });
 };

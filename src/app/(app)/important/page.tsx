@@ -9,10 +9,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  // const [_, queryClient] = useQueryClient().getQueriesData({
-  //   queryKey: ["tasks"],
-  // })[0];
-
   const taskQuery = useTaskQuery();
   return (
     <>

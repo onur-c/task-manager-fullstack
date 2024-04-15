@@ -1,5 +1,12 @@
 "use client";
-import { UserButton, UserProfile, useAuth, useUser } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  UserProfile,
+  useAuth,
+  useUser,
+} from "@clerk/nextjs";
 
 import { cn } from "@/lib/utils";
 import {
@@ -47,12 +54,9 @@ const Sidebar = () => {
       <Button
         variant={"default"}
         asChild
-        className="mx-auto mt-4 p-2"
+        className="mx-auto mt-4 p-2 space-x-2"
       >
-        <Link
-          href={"/"}
-          className="space-x-2"
-        >
+        <Link href={"/"}>
           <Half2Icon className="size-6" />
           <p className="hidden sm:inline-block">Taskdash.</p>
         </Link>
@@ -67,16 +71,16 @@ const Sidebar = () => {
           )}
         >
           <UserButton afterSignOutUrl="/" />
-          {!!user && (
+          <SignedIn>
             <div className="hidden sm:inline-block">
-              <p className="text-sm">{user.fullName}</p>
+              <p className="text-sm">{user?.fullName}</p>
               <p className="truncate w-[12ch] text-xs opacity-80">
-                {user.primaryEmailAddress?.toString()}
+                {user?.primaryEmailAddress?.toString()}
               </p>
             </div>
-          )}
+          </SignedIn>
         </div>
-        {!isSignedIn && (
+        <SignedOut>
           <Button
             className="w-2/3"
             variant="outline"
@@ -84,7 +88,7 @@ const Sidebar = () => {
           >
             <Link href={"/sign-in"}>Sign in</Link>
           </Button>
-        )}
+        </SignedOut>
       </div>
 
       {/* Desktop */}
@@ -92,26 +96,22 @@ const Sidebar = () => {
         <div className="flex flex-col gap-2 my-auto">
           {links.map((link) => {
             return (
-              <Button
+              <Link
+                href={link.route}
                 key={link.label}
-                variant="ghost"
                 className={cn(
-                  "rounded-none border-x-0",
+                  buttonVariants({ variant: "ghost" }),
+                  "rounded-none border-x-0 flex items-center gap-4 justify-start ",
                   `${
                     pathname === link.route
-                      ? "border-r-8 border-r-primary bg-primary/10"
+                      ? "border-r-8 border-r-primary bg-primary/10 "
                       : ""
                   }`
                 )}
               >
-                <Link
-                  href={link.route}
-                  className="flex items-center w-full "
-                >
-                  <div className="sm:mr-3">{link.icon}</div>
-                  <p className="hidden sm:inline-block">{link.label}</p>
-                </Link>
-              </Button>
+                <div className=" ">{link.icon}</div>
+                <p className="hidden sm:block  ">{link.label}</p>
+              </Link>
             );
           })}
         </div>
